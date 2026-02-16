@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Tiket yang Berhasil Diamankan - buatngirimtugas</title>
 
     <!-- Google Font -->
@@ -11,243 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Jua&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* CSS Tambahan untuk halaman tiket-secured.html */
-        
-        .ticket-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .ticket-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        .ticket-card p {
-            margin: 6px 0;
-        }
-        .ticket-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        body {
-            font-family: 'Jua', cursive;
-            margin: 0;
-            padding: 0;
-            background-color: #fef3c7;
-            color: #333;
-        }
-        .container {
-            width: min(1100px, 92%);
-            margin: 0 auto;
-            padding: 16px 0;
-        }
-        header {
-            position: relative;
-            color: #fff;
-            text-align: center;
-
-            background-image: url("header.png");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-
-            min-height: clamp(120px, 16vw, 230px);
-
-            display: flex;
-            align-items; center;
-        }
-        header h1 {
-            margin: 0;
-            padding: 0;
-            font-size: 1.9rem;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0 0;
-
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        nav ul li {
-            margin: 0;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
-        }
-        section {
-            padding: 26px 28 px;
-            background: #fff;
-            margin: 18px 0;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-        section.container {
-            padding: 28px 32px;  /* bikin lebih lega kiri-kanan */
-        }
-        section.container h2 {
-            margin: 0 0 10px;
-        }
-        section.container p {
-            margin: 0 0 22px;
-        }
-
-        .filter-controls {
-            font-family: 'Jua', cursive;
-            display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 18px;
-            margin: 18px 0 16px;
-            padding: 22px;
-            background-color: #f2f2f2;
-            border-radius: 14px;
-        }
-        .filter-controls label {
-            font-family: 'Jua', cursive;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        .filter-controls select,
-        .filter-controls input[type="text"] {
-            font-family: 'Jua', cursive;
-            padding: 10px 12px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 1em;
-            width: 100%; /* Lebar standar untuk input/select */
-            height: 44px;
-            box-sizing: border-box;
-        }
-        .filter-controls button {
-            font-family: 'Jua', cursive;
-            padding: 10px 20px;
-            background-color: #b86b3d; /* Warna tombol dengan warna asli */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-        .filter-controls button:hover {
-            background-color: #564036; /* Hover ke warna lebih gelap */
-        }
-        .filter-item {
-            min-width: 0;
-        }
-
-        .ticket-count {
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #333;
-        }
-        .ticket-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsif grid */
-            gap: 20px;
-            padding: 0 20px;
-        }
-        .ticket-item {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.2s ease-in-out;
-        }
-        .ticket-item:hover {
-            transform: translateY(-5px);
-        }
-        .ticket-item img {
-            max-width: 100%;
-            height: 200px; /* Tinggi gambar standar */
-            object-fit: cover; /* Pastikan gambar mengisi area dengan baik */
-            display: block;
-            margin: 0 auto;
-            border-bottom: 1px solid #eee;
-        }
-        .ticket-info {
-            padding: 15px;
-        }
-        .ticket-info h3 {
-            margin-top: 0;
-            color: #333;
-            font-size: 1.2em;
-        }
-        .ticket-info p {
-            margin: 5px 0;
-            font-size: 0.9em;
-            color: #555;
-        }
-        .no-results {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.2em;
-            color: #777;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #b86b3d; /* Menggunakan warna gelap senada */
-            color: #fff;
-            font-size: 0.9em;
-            margin-top: 30px;
-        }
-        footer a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .subtitle {
-            margin: 6px 0 14px;
-            font-size: 1.05rem;
-            color: #444;
-        }
-
-        .linktree-text {
-            margin: 0 0 8px;
-            color: #444;
-        }
-
-        .linktree-link {
-            display: inline-block;
-            margin-top: 4px;
-            padding: 10px 14px;
-            border-radius: 12px;
-            background: #b86b3d;
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .linktree-link:hover {
-            background: #564036;
-        }
-
-
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .filter-controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            .filter-controls select,
-            .filter-controls input[type="text"] {
-                width: 90%;
-            }
-        }
-    </style>
 </head>
+    
 <body>
     <header>
         <div class="container">
@@ -268,7 +34,7 @@
         <p class="linktree-text">
             Untuk melihat media sosial dan testimoni lengkap, silakan klik Linktree berikut:
         </p>
-        <a class="linktree-link" href="https://linktr.ee/buatngirimtugas" target="_blank" rel="noopener"">
+        <a class="linktree-link" href="https://linktr.ee/buatngirimtugas" target="_blank" rel="noopener">
             👉 linktr.ee/buatngirimtugas
         </a>
 
@@ -1343,3 +1109,4 @@
     </script>
 </body>
 </html>
+

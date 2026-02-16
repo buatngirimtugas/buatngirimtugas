@@ -28,10 +28,10 @@ header {
 
   background-image: url("header.png");
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position: center top;
 
-  min-height: clamp(180px, 30vw, 420px);
+  min-height: clamp(140px, 18vw, 260px);
 
   display: flex;
   align-items: center;
@@ -126,6 +126,14 @@ nav a:hover {
     padding: 16px;
     gap: 12px;
   }
+
+   @media (max-width: 520px) {
+  header {
+    min-height: 140px;
+    background-position: center;
+  }
+}
+
 
   .section-box {
     padding: 18px 16px;
@@ -304,3 +312,4 @@ footer a:hover {
     font-size: 1.7rem;
   }
 }
+

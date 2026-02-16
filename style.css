@@ -27,11 +27,11 @@ header {
   text-align: center;
 
   background-image: url("header.png");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: center top;
+  background-position: center;
 
-  min-height: clamp(140px, 18vw, 260px);
+  min-height: 260px;
 
   display: flex;
   align-items: center;
@@ -133,6 +133,13 @@ nav a:hover {
     background-position: center;
   }
 }
+
+   @media (min-width: 1024px) {
+  header {
+    min-height: 380px;
+  }
+}
+
 
 
   .section-box {
@@ -312,4 +319,5 @@ footer a:hover {
     font-size: 1.7rem;
   }
 }
+
 

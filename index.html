@@ -26,7 +26,7 @@
         </div>
     </header>
 
-    <section class="container">
+    <section class="container section-box">
         <h2>Galeri Tiket yang Berhasil Kami Amankan</h2>
         <p class="subtitle">
             Bukti hasil war tiket kami — cepat, aman, dan terpercaya.
@@ -39,34 +39,47 @@
         </a>
 
         <div class="filter-controls">
-            <div>
+            <div class="filter-item">
                 <label for="filter-country">Negara:</label>
                 <select id="filter-country">
                     <option value="">Semua</option>
                     </select>
             </div>
-            <div>
+            
+            <div class="filter-item">
                 <label for="filter-website">Website Pembelian:</label>
                 <select id="filter-website">
                     <option value="">Semua</option>
                     </select>
             </div>
-            <div>
+            
+            <div class="filter-item">
                 <label for="filter-event">Nama Event:</label>
                 <input type="text" id="filter-event" placeholder="Cari nama event..." list="event-suggestions"/>
                 <datalist id="event-suggestions"></datalist>
             </div>
-            <div>
+            
+            <div class="filter-item">
                 <label for="filter-year">Tahun:</label>
                 <select id="filter-year">
                     <option value="">Semua</option>
                     </select>
             </div>
-            <div>
+            
+            <div class="filter-item">
                 <label for="filter-artist">Nama Artis:</label>
                 <input type="text" id="filter-artist" placeholder="Cari nama artis..." list="artist-suggestions"/>
                 <datalist id="artist-suggestions"></datalist>
             </div>
+
+            <div class="filter-actions">
+            <button class="btn-secondary" type="button" onclick="applyFilters()">Filter</button>
+            </div>
+
+            <div class="filter-actions">
+            <button class="btn-secondary" type="button" onclick="resetFilters()">Reset Filter</button>
+            </div>
+            
             <button onclick="applyFilters()">Filter</button>
             <button onclick="resetFilters()">Reset Filter</button>
         </div>
@@ -1109,4 +1122,5 @@
     </script>
 </body>
 </html>
+
 

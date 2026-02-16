@@ -30,15 +30,16 @@ header {
   text-align: center;
 
   background-image: url("header.png");
-  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
-  background-size: 600px auto; /* default (HP) */
+  background-repeat: no-repeat;
 
-  min-height: clamp(125px, 14vw, 200px);
+  min-height: clamp(120px, 16vw, 230px);
 
   display: flex;
   align-items: center;
 }
+
 
 /* Laptop / Desktop */
 @media (min-width: 900px) {
@@ -161,20 +162,9 @@ nav a:hover {
   }
 }
 
-   @media (min-width: 1024px) {
-  header {
-    min-height: 380px;
-  }
-}
-
-
-
-  .section-box {
+     .section-box {
     padding: 18px 16px;
   }
-}
-
-
 
 .filter-item {
   display: flex;
@@ -365,6 +355,7 @@ footer a:hover {
 .linktree-link:hover {
   background: #564036;
 }
+
 
 
 

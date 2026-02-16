@@ -327,6 +327,23 @@ footer a:hover {
   }
 }
 
+.linktree-link {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #b86b3d;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.linktree-link:hover {
+  background: #564036;
+}
+
+
+
 
 
 

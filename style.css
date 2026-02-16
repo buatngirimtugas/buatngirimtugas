@@ -34,7 +34,7 @@ header {
   min-height: clamp(180px, 30vw, 420px);
 
   display: flex;
-  align-items; center;
+  align-items: center;
 }
 
 
@@ -127,7 +127,7 @@ nav a:hover {
     gap: 12px;
   }
 
-  section {
+  .section-box {
     padding: 18px 16px;
   }
 }
@@ -147,6 +147,9 @@ nav a:hover {
 
 .filter-controls select,
 .filter-controls input {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
   font-family: "Jua", cursive;
   padding: 10px 12px;
   border: 1px solid #d4d4d4;
@@ -286,11 +289,6 @@ footer a:hover {
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 900px) {
-  .filter-controls {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 
 @media (max-width: 520px) {
   nav ul {

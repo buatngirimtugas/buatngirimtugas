@@ -21,29 +21,47 @@ body {
 /* =========================
    HEADER
 ========================= */
+/* =========================
+   HEADER
+========================= */
 header {
   position: relative;
   color: #fff;
   text-align: center;
 
   background-image: url("header.png");
-  background-size: 600px auto; /*HP lebih besar */
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 600px auto; /* default (HP) */
 
   min-height: clamp(125px, 14vw, 200px);
-}
-
-  /* Laptop / Dekstop */
-  @media (min-width: 900px) {
-     header {
-        background-size: 950px auto; /*Dekstop lebih kecil*/
-     }
-  }
 
   display: flex;
   align-items: center;
 }
+
+/* Laptop / Desktop */
+@media (min-width: 900px) {
+  header {
+    background-size: 950px auto;
+  }
+}
+
+/* HP kecil */
+@media (max-width: 520px) {
+  header {
+    min-height: 140px;
+    background-size: 650px auto;
+  }
+}
+
+/* Desktop besar */
+@media (min-width: 1024px) {
+  header {
+    min-height: 300px;
+  }
+}
+
 
 
 header .container {
@@ -261,13 +279,16 @@ nav a:hover {
 .ticket-item img {
   width: 100%;
   height: 210px;
-  object-fit: cover;
+  object-fit: contain;
+  background: white;
   display: block;
   border-bottom: 1px solid #eee;
 }
 
+
 .ticket-info {
   padding: 14px 14px 16px;
+  text-align: center;
 }
 
 .ticket-info h3 {
@@ -344,6 +365,7 @@ footer a:hover {
 .linktree-link:hover {
   background: #564036;
 }
+
 
 
 

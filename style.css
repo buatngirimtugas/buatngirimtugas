@@ -27,11 +27,18 @@ header {
   text-align: center;
 
   background-image: url("header.png");
-  background-size: 100%;
+  background-size: 145%; /*HP lebih besar */
   background-repeat: no-repeat;
   background-position: center;
 
   min-height: clamp(125px, 14vw, 200px);
+
+  /* Laptop / Dekstop */
+  @media (min-width: 900px) {
+     header {
+        background-size: 115%; /*Dekstop lebih kecil*/
+     }
+  }
 
   display: flex;
   align-items: center;
@@ -319,6 +326,7 @@ footer a:hover {
     font-size: 1.7rem;
   }
 }
+
 
 
 

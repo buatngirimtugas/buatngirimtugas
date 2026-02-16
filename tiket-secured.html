@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiket yang Berhasil Diamankan - buatngirimtugas</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Jua&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* CSS Tambahan untuk halaman tiket-secured.html */
+        
+        .ticket-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .ticket-card p {
+            margin: 6px 0;
+        }
+        .ticket-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        body {
+            font-family: 'Jua', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #fef3c7;
+            color: #333;
+        }
+        .container {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 16px 0;
+        }
+        header {
+            position: relative;
+            color: #fff;
+            text-align: center;
+
+            background-image: url("header.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            min-height: clamp(120px, 16vw, 230px);
+
+            display: flex;
+            align-items; center;
+        }
+        header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 1.9rem;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        section {
+            padding: 26px 28 px;
+            background: #fff;
+            margin: 18px 0;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        section.container {
+            padding: 28px 32px;  /* bikin lebih lega kiri-kanan */
+        }
+        section.container h2 {
+            margin: 0 0 10px;
+        }
+        section.container p {
+            margin: 0 0 22px;
+        }
+
+        .filter-controls {
+            font-family: 'Jua', cursive;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 18px;
+            margin: 18px 0 16px;
+            padding: 22px;
+            background-color: #f2f2f2;
+            border-radius: 14px;
+        }
+        .filter-controls label {
+            font-family: 'Jua', cursive;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .filter-controls select,
+        .filter-controls input[type="text"] {
+            font-family: 'Jua', cursive;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1em;
+            width: 100%; /* Lebar standar untuk input/select */
+            height: 44px;
+            box-sizing: border-box;
+        }
+        .filter-controls button {
+            font-family: 'Jua', cursive;
+            padding: 10px 20px;
+            background-color: #b86b3d; /* Warna tombol dengan warna asli */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .filter-controls button:hover {
+            background-color: #564036; /* Hover ke warna lebih gelap */
+        }
+        .filter-item {
+            min-width: 0;
+        }
+
+        .ticket-count {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .ticket-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsif grid */
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .ticket-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+        .ticket-item:hover {
+            transform: translateY(-5px);
+        }
+        .ticket-item img {
+            max-width: 100%;
+            height: 200px; /* Tinggi gambar standar */
+            object-fit: cover; /* Pastikan gambar mengisi area dengan baik */
+            display: block;
+            margin: 0 auto;
+            border-bottom: 1px solid #eee;
+        }
+        .ticket-info {
+            padding: 15px;
+        }
+        .ticket-info h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+        .ticket-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #777;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #b86b3d; /* Menggunakan warna gelap senada */
+            color: #fff;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .subtitle {
+            margin: 6px 0 14px;
+            font-size: 1.05rem;
+            color: #444;
+        }
+
+        .linktree-text {
+            margin: 0 0 8px;
+            color: #444;
+        }
+
+        .linktree-link {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: #b86b3d;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .linktree-link:hover {
+            background: #564036;
+        }
+
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .filter-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .filter-controls select,
+            .filter-controls input[type="text"] {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="color: #fff; text-decoration: none;"> </a></h1>
+            <nav>
+                <ul>
+                    <li><a href="https://linktr.ee/buatngirimtugas" target="_blank" rel="noopener"> </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="container">
+        <h2>Galeri Tiket yang Berhasil Kami Amankan</h2>
+        <p class="subtitle">
+            Bukti hasil war tiket kami — cepat, aman, dan terpercaya.
+        </p>
+        <p class="linktree-text">
+            Untuk melihat media sosial dan testimoni lengkap, silakan klik Linktree berikut:
+        </p>
+        <a class="linktree-link" href="https://linktr.ee/buatngirimtugas" target="_blank" rel="noopener"">
+            👉 linktr.ee/buatngirimtugas
+        </a>
+
+        <div class="filter-controls">
+            <div>
+                <label for="filter-country">Negara:</label>
+                <select id="filter-country">
+                    <option value="">Semua</option>
+                    </select>
+            </div>
+            <div>
+                <label for="filter-website">Website Pembelian:</label>
+                <select id="filter-website">
+                    <option value="">Semua</option>
+                    </select>
+            </div>
+            <div>
+                <label for="filter-event">Nama Event:</label>
+                <input type="text" id="filter-event" placeholder="Cari nama event..." list="event-suggestions"/>
+                <datalist id="event-suggestions"></datalist>
+            </div>
+            <div>
+                <label for="filter-year">Tahun:</label>
+                <select id="filter-year">
+                    <option value="">Semua</option>
+                    </select>
+            </div>
+            <div>
+                <label for="filter-artist">Nama Artis:</label>
+                <input type="text" id="filter-artist" placeholder="Cari nama artis..." list="artist-suggestions"/>
+                <datalist id="artist-suggestions"></datalist>
+            </div>
+            <button onclick="applyFilters()">Filter</button>
+            <button onclick="resetFilters()">Reset Filter</button>
+        </div>
+
+        <div class="ticket-count">
+            Total Tiket Diamankan: <span id="secured-ticket-count">0</span>
+        </div>
+
+        <div id="ticket-gallery" class="ticket-gallery">
+            <div class="no-results" id="no-results-message" style="display: none;">
+                Tidak ada tiket yang cocok dengan filter Anda.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 buatngirimtugas. Semua Hak Dilindungi.</p>
+            <p><a href="terms-conditions.html">Syarat & Ketentuan</a> | <a href="privacy-policy.html">Kebijakan Privasi</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const allTickets = [
+            {
+                id: 1,
+                image: "https://i.imgur.com/Nqv6AzY.png", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'CHEN CONCERT TOUR <Arcadia> in JAKARTA 2026',
+                artist: 'Chen',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Tap Ypur Tickets',
+                year: 2026,
+                notes: 'Secured 1 Tiket CAT 2',
+                quantity: 1 // Tambahkan quantity
+            },
+            {
+                id: 2,
+                image: "https://pbs.twimg.com/media/G4xpMF2agAAPcRb?format=jpg&name=900x900", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'LIVEPROJECT 2025',
+                artist: 'Sheila On 7, Tulus, Bernadya, Hindia, RAN, Pamungkas, Hunian, Feast',
+                country: 'Indonesia',
+                city: 'Semarang',
+                purchaseWebsite: 'Yesplis',
+                year: 2025,
+                notes: 'Secured 3 Tiket Premium',
+                quantity: 3 // Tambahkan quantity
+            },
+            {
+                id: 3,
+                image: "https://pbs.twimg.com/media/G4xoAghaQAAhkMq?format=jpg&name=900x900", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'NCT DREAM THE DREAM SHOW 4 IN JAKARTA',
+                artist: 'NCT DREAM',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 7 Tiket Future Zone',
+                quantity: 7 // Tambahkan quantity
+            },
+            {
+                id: 4,
+                image: "https://pbs.twimg.com/media/G4xnmdnaAAAroQg?format=jpg&name=small", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'NCT DREAM THE DREAM SHOW 4 IN JAKARTA',
+                artist: 'NCT DREAM',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 2 Tiket Dream A-B',
+                quantity: 2 // Tambahkan quantity
+            },
+            {
+                id: 5,
+                image: "https://pbs.twimg.com/media/G4xnO6aacAAvtWO?format=jpg&name=small", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'SUPER JUNIOR 20th ANNIVERSARY SUPER SHOW 10 IN SEOUL 2025',
+                artist: 'Super Junior',
+                country: 'Korea',
+                city: 'Seoul',
+                purchaseWebsite: 'tkglobal.melon.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket',
+                quantity: 1 // Tambahkan quantity
+            },
+            {
+                id: 6,
+                image: "https://pbs.twimg.com/media/G4xm8obaoAAv-5-?format=jpg&name=small", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'WEEKLY DIAMOND PASS X GOPAY',
+                artist: '-',
+                country: '-',
+                city: '-',
+                purchaseWebsite: 'Gopay Merchant',
+                year: 2025,
+                notes: 'Secured 1 User Weekly Diamond Pass',
+                quantity: 1 // Tambahkan quantity
+            },
+            {
+                id: 7,
+                image: "https://pbs.twimg.com/media/G4xms6qaMAA4Pn3?format=jpg&name=900x900", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: '-',
+                city: '-',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 3 Tiket',
+                quantity: 3 // Tambahkan quantity
+            },
+            {
+                id: 8,
+                image: "https://i.imgur.com/pfEb49m.png", // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'HELLOBOYSSS ASIA TOUR IN JAKARTA 2025',
+                artist: 'Proxie, Atlas, dan Perses',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiketmelon.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket Zona A',
+                quantity: 1 // Tambahkan quantity
+            },
+            {
+                id: 9,
+                image: 'https://i.imgur.com/Yh5LYts.png', // Placeholder, Ganti dengan URL gambar BLACKPINK Anda
+                eventName: 'Wisuda UT Pusat Periode II Tahun Akademik 2024/2025',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Website Kampus',
+                year: 2025,
+                notes: 'Secured 1 Slot Wisuda',
+                quantity: 1 // Contoh: jika dapat 2 tiket
+            },
+            {
+                id: 10,
+                image: 'https://i.imgur.com/zKdEW6D.png', // Imgur direct link, removed _d.png?maxwidth... part
+                eventName: 'Spotify X ENHYPEN: MAISON ENHYPEN JAKARTA 2025',
+                artist: 'ENHYPEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 3 Tiket Batch 41',
+                quantity: 3 // Menunjukkan 3 tiket untuk entri ini
+            },
+            {
+                id: 11,
+                image: 'https://i.imgur.com/Xh9r3bg.png', // Placeholder, Ganti dengan URL gambar Taylor Swift Anda
+                eventName: 'G-DRAGON WORLD TOUR [Übermensch] IN JAKARTA 2025',
+                artist: 'G-DRAGON',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket CAT 4',
+                quantity: 1
+            },
+            {
+                id: 12,
+                image: 'https://i.imgur.com/FVt4oiA.png', // Placeholder, Ganti dengan URL gambar Ed Sheeran Anda
+                eventName: 'BLACKPINK WORLD TOUR <DEADLINE> IN JAKARTA 2025',
+                artist: 'BLACKPINK',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2025,
+                notes: 'Secured 3 Tiket CAT 3',
+                quantity: 3 // Contoh: jika dapat 4 tiket
+            },
+            {
+                id: 13,
+                image: 'https://i.imgur.com/FPyXVk0.png', // Placeholder, Ganti dengan URL gambar NCT Dream Anda
+                eventName: 'j-hope Tour "HOPE ON THE STAGE" FINAL 2025',
+                artist: 'J-Hope',
+                country: 'Korea',
+                city: 'Goyang',
+                purchaseWebsite: 'Interpark Global',
+                year: 2025,
+                notes: 'Secured 1 Tiket General S 3F',
+                quantity: 1 // Contoh: jika dapat 2 tiket
+            },
+            {
+                id: 14,
+                image: 'https://i.imgur.com/YFlAhSt.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'j-hope Tour "HOPE ON THE STAGE" FINAL 2025',
+                artist: 'J-Hope',
+                country: 'Korea',
+                city: 'Goyang',
+                purchaseWebsite: 'Interpark Global',
+                year: 2025,
+                notes: 'Secured 1 Tiket General R 2nd Floor',
+                quantity: 1
+            },
+            {
+                id: 15,
+                image: 'https://i.imgur.com/MJsUSAr.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: '2025 NCT DREAM TOUR 〈THE DREAM SHOW 4 : DREAM THE FUTURE〉',
+                artist: 'NCT DREAM',
+                country: 'Korea',
+                city: 'Seoul',
+                purchaseWebsite: 'Melon Global',
+                year: 2025,
+                notes: 'Secured 1 Tiket General Admission Seats',
+                quantity: 1
+            },
+            {
+                id: 16,
+                image: 'https://i.imgur.com/LhI4MJd.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: '2025 Weverse Con Festival',
+                artist: '82MAJOR, ENHYPEN, FIFTY FIFTY, ILLIT, TREASURE, VIVIZ, BoA',
+                country: 'Korea',
+                city: 'Incheon',
+                purchaseWebsite: 'Interpark Global',
+                year: 2025,
+                notes: 'Secured 1 Tiket CON',
+                quantity: 1
+            },
+            {
+                id: 17,
+                image: 'https://i.imgur.com/9wLVdJP.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'GOTCHA POP 3 Concert',
+                artist: 'TRINITY, PROXIE, PiXXiE, PERSES, LYKN, BUS because of you i shine, DICE, VIIS, QRRA, GELBOYS, DAOU OFFROAD',
+                country: 'Thailand',
+                city: 'Bangkok',
+                purchaseWebsite: 'Thaiticketmajor',
+                year: 2025,
+                notes: 'Secured 1 Tiket A7',
+                quantity: 1
+            },
+            {
+                id: 18,
+                image: 'https://i.imgur.com/6a9A14f.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: '2025 GOT7 CONCERT〈NESTFEST〉in BANGKOK',
+                artist: 'GOT7',
+                country: 'Thailand',
+                city: 'Bangkok',
+                purchaseWebsite: 'Thaiticketmajor',
+                year: 2025,
+                notes: 'Secured 1 Tiket SL Standing',
+                quantity: 1
+            },
+            {
+                id: 19,
+                image: 'https://i.imgur.com/aetMnTn.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: '2025 KISS OF LIFE 1ST WORLD TOUR KISS ROAD in JAKARTA',
+                artist: 'KISS OF LIFE',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Tap Your Tickets',
+                year: 2025,
+                notes: 'Secured 1 Tiket VIP',
+                quantity: 1
+            },
+            {
+                id: 20,
+                image: 'https://i.imgur.com/YS0F3kq.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: '2025 SVT 9TH FAN MEETING〈SEVENTEEN in CARAT LAND〉',
+                artist: 'SEVENTEEN',
+                country: 'Korea',
+                city: 'Incheon',
+                purchaseWebsite: 'Interpark Global',
+                year: 2025,
+                notes: 'Secured 1 Tiket S Seats 4F',
+                quantity: 1
+            },
+            {
+                id: 21,
+                image: 'https://i.imgur.com/AqhLzy5.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'j-hope Tour "HOPE ON THE STAGE" in JAKARTA 2025 - DAY 2',
+                artist: 'J-Hope',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket VIP A',
+                quantity: 1
+            },
+            {
+                id: 22,
+                image: 'https://i.imgur.com/J9FwAxJ.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'j-hope Tour "HOPE ON THE STAGE" in JAKARTA 2025 - DAY 1',
+                artist: 'J-Hope',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2025,
+                notes: 'Secured 2 Tiket CAT 1',
+                quantity: 2
+            },
+            {
+                id: 23,
+                image: 'https://i.imgur.com/mhvB4vV.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'Spotify Carat Station 2025',
+                artist: 'Seventeen',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 6 Tiket Day 4',
+                quantity: 6
+            },
+            {
+                id: 24,
+                image: 'https://i.imgur.com/ODdYba0.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'DAY6 3RD WORLD TOUR <FOREVER YOUNG> in JAKARTA',
+                artist: 'DAY6',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'mecimashop',
+                year: 2025,
+                notes: 'Secured 1 Tiket Orange A Soundcheck Package',
+                quantity: 1
+            },
+            {
+                id: 25,
+                image: 'https://i.imgur.com/kJmA6PQ.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'NCT 127 4TH TOUR "NEO CITY: TAIPEI - THE MOMENTUM"',
+                artist: 'NCT 127',
+                country: 'Taiwan',
+                city: 'Taipei',
+                purchaseWebsite: 'tixcraft',
+                year: 2025,
+                notes: 'Secured 1 Tiket NEO CITY',
+                quantity: 1
+            },
+            {
+                id: 26,
+                image: 'https://i.imgur.com/fYtTIQk.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 2 Tiket Gandaria City SESI 2 : 11.15 - 12.00',
+                quantity: 2
+            },
+            {
+                id: 27,
+                image: 'https://i.imgur.com/HWubP7v.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'j-hope Tour "HOPE ON THE STAGE" in SEOUL',
+                artist: 'J-Hope',
+                country: 'Korea',
+                city: 'Seoul',
+                purchaseWebsite: 'Interpark Global',
+                year: 2025,
+                notes: 'Secured 1 Tiket General Standing',
+                quantity: 1
+            },
+            {
+                id: 28,
+                image: 'https://i.imgur.com/qOeugRU.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'LYKN UNLEASHED ASIA TOUR IN JAKARTA 2025',
+                artist: 'LYKN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket Regular',
+                quantity: 1
+            },
+            {
+                id: 29,
+                image: 'https://i.imgur.com/ZBHBEYV.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'GMMTV Fan Day in JAKARTA 2025',
+                artist: 'Pond Naravit dan Sea Tawinan',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket POND - GOLD',
+                quantity: 1
+            },
+            {
+                id: 30,
+                image: 'https://i.imgur.com/O0wJhm9.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket 19 Jan Gandaria City SESI 2 : 11.15 - 12.00',
+                quantity: 1
+            },
+            {
+                id: 31,
+                image: 'https://i.imgur.com/xZksqYa.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket 3 Mar Gandaria City SESI 1 : 10.30 - 11.15',
+                quantity: 1
+            },
+            {
+                id: 32,
+                image: 'https://i.imgur.com/oQu8BSn.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket 1 Mar Senayan City SESI 8 : 14.00 - 14.30',
+                quantity: 1
+            },
+            {
+                id: 33,
+                image: 'https://i.imgur.com/JuuC4mz.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2025,
+                notes: 'Secured 1 Tiket Senayan City SESI 3 : 11.30 - 12.00',
+                quantity: 1
+            },
+            {
+                id: 34,
+                image: 'https://i.imgur.com/yM5GtkD.png', // Placeholder, Ganti dengan URL gambar MotoGP Anda
+                eventName: 'TOP UP WEEKLY DIAMOND PASS (MOBILE LEGEND)',
+                artist: '-',
+                country: '-',
+                city: '-',
+                purchaseWebsite: 'Gopay Merchant',
+                year: 2025,
+                notes: 'Secured 1 User Weekly Diamond Pass',
+                quantity: 1
+            },
+            {
+                id: 35,
+                image: 'https://pbs.twimg.com/media/GebafmuaoAAom8l?format=jpg&name=small',
+                eventName: 'NCT 127 4TH TOUR "NEO CITY : JAKARTA - THE MOMENTUM" 2025',
+                artist: 'NCT 127',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket NEO CITY',
+                quantity: 2
+            },
+            {
+                id: 36,
+                image: 'https://pbs.twimg.com/media/GebaK9TaIAAwy_T?format=jpg&name=small',
+                eventName: 'Konser Untuk Korban Sakit Hati Lagi',
+                artist: 'Juicy Luicy',
+                country: 'Indonesia',
+                city: 'Medan',
+                purchaseWebsite: 'Yesplis',
+                year: 2024,
+                notes: 'Secured 2 Tiket Presale Jiwa Muda',
+                quantity: 2
+            },
+            {
+                id: 37,
+                image: 'https://pbs.twimg.com/media/GebRow4aIAExvWk?format=jpg&name=small',
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket 23 Nov SESI 1 : 10.30 - 11.15',
+                quantity: 1
+            },
+            {
+                id: 38,
+                image: 'https://pbs.twimg.com/media/GebQlpua0AAr8aI?format=jpg&name=small',
+                eventName: 'NIKI: Buzz World Tour Jakarta - Day 1',
+                artist: 'NIKI',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket Regular 2',
+                quantity: 2
+            },
+            {
+                id: 39,
+                image: 'https://pbs.twimg.com/media/GebQXIRbcAAh2AT?format=jpg&name=small',
+                eventName: 'NIKI: Buzz World Tour Jakarta - Day 1',
+                artist: 'NIKI',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket Silver',
+                quantity: 2
+            },
+            {
+                id: 40,
+                image: 'https://pbs.twimg.com/media/GebP17EaMAATGp4?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN BULACAN - Day 1',
+                artist: 'SEVENTEEN',
+                country: 'Filipina',
+                city: 'Bocaue',
+                purchaseWebsite: 'SM TICKETS',
+                year: 2024,
+                notes: 'Secured 2 Tiket VIP C',
+                quantity: 2
+            },
+            {
+                id: 41,
+                image: 'https://pbs.twimg.com/media/GebO9RxacAA65LB?format=jpg&name=small',
+                eventName: 'MEET & GREET WAVE HERE ON 17 DEC: INDOMILK & CHITATO',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket CHILL (INDOMILK & CHITATO SPECIAL PACKAGE)',
+                quantity: 1
+            },
+            {
+                id: 42,
+                image: 'https://pbs.twimg.com/media/Gcvovtqa4AAuo_V?format=jpg&name=small',
+                eventName: 'MEET & GREET WAVE HERE ON 17 DEC: INDOMILK & CHITATO',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 3 Tiket MILKY (INDOMILK & CHITATO SPECIAL PACKAGE)',
+                quantity: 3
+            },
+            {
+                id: 43,
+                image: 'https://pbs.twimg.com/media/GcvoJp1bMAAnM3B?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN JAKARTA (ADDSHOW) - Day 2',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'mecimashop',
+                year: 2024,
+                notes: 'Secured 2 Tiket BLUE EAST - TIER 1',
+                quantity: 2
+            },
+            {
+                id: 44,
+                image: 'https://pbs.twimg.com/media/Gcvn2V7bcAQ-jld?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN JAKARTA (ADDSHOW) - Day 2',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'mecimashop',
+                year: 2024,
+                notes: 'Secured 2 Tiket ORANGE EAST - TIER 1',
+                quantity: 2
+            },
+            {
+                id: 45,
+                image: 'https://pbs.twimg.com/media/GcvnvQKaIAARNp7?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN JAKARTA (ADDSHOW) - Day 2',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'mecimashop',
+                year: 2024,
+                notes: 'Secured 2 Tiket PINK A SOUNDCHECK PACKAGE',
+                quantity: 2
+            },
+            {
+                id: 46,
+                image: 'https://pbs.twimg.com/media/GcvneZ2bcAAI3Ml?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN JAKARTA - Day 1',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket YELLOW - NORTH',
+                quantity: 1
+            },
+            {
+                id: 47,
+                image: 'https://pbs.twimg.com/media/GcvnYUCaEAAGZm-?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN JAKARTA - Day 1',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'mecimashop',
+                year: 2024,
+                notes: 'Secured 1 Tiket PURPLE EAST - TIER 1',
+                quantity: 1
+            },
+            {
+                id: 48,
+                image: 'https://pbs.twimg.com/media/GcvnH6AbcAA8Yw-?format=jpg&name=small',
+                eventName: 'SEVENTEEN [RIGHT HERE] WORLD TOUR IN JAKARTA - Day 1',
+                artist: 'SEVENTEEN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket GREEN - EAST',
+                quantity: 1
+            },
+            {
+                id: 49,
+                image: 'https://pbs.twimg.com/media/GaqKiuVbAAAnpfT?format=jpg&name=small',
+                eventName: 'Wonderland - JKT48 13th Anniversary Concert & Sousenkyo Announcement',
+                artist: 'JKT48',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket CAT 6',
+                quantity: 2
+            },
+            {
+                id: 50,
+                image: 'https://pbs.twimg.com/media/GaDvS4Jb0AEoivW?format=jpg&name=small',
+                eventName: 'Wonderland - JKT48 13th Anniversary Concert & Sousenkyo Announcement',
+                artist: 'JKT48',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket CAT 1',
+                quantity: 1
+            },
+            {
+                id: 51,
+                image: 'https://pbs.twimg.com/media/GZmEER2acAAVLES?format=jpg&name=small',
+                eventName: '2024-25 2NE1 ASIA TOUR [WELCOME BACK] IN JAKARTA - ADD SHOW',
+                artist: '2NE1',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket VIP A',
+                quantity: 2
+            },
+            {
+                id: 52,
+                image: 'https://pbs.twimg.com/media/GZCDNCkaEAA6596?format=jpg&name=small',
+                eventName: 'POP MART INDONESIA SPECIAL DROPS',
+                artist: '-',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket 05 Okt SESI 11 : 17.15 - 18.00',
+                quantity: 1
+            },
+            {
+                id: 53,
+                image: 'https://pbs.twimg.com/media/GY34ghsaQAAhyaM?format=jpg&name=small',
+                eventName: '2024 CHANYEOL LIVE TOUR: 都市風景 (City-scape) in JAKARTA',
+                artist: 'Chanyeol',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket CAT L',
+                quantity: 2
+            },
+            {
+                id: 54,
+                image: 'https://pbs.twimg.com/media/GY34B2qa4AAYQ8p?format=jpg&name=small',
+                eventName: 'CHOI JIN HYUK "Day and Night" 2024 FAN-CON Tour in Jakarta',
+                artist: 'CHOI JIN HYUK',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket VVIP',
+                quantity: 1
+            },
+            {
+                id: 55,
+                image: 'https://pbs.twimg.com/media/GY3358KbsAA2vH_?format=jpg&name=small',
+                eventName: 'CHOI JIN HYUK "Day and Night" 2024 FAN-CON Tour in Jakarta',
+                artist: 'CHOI JIN HYUK',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket VIP',
+                quantity: 1
+            },
+            {
+                id: 56,
+                image: 'https://pbs.twimg.com/media/GYx_v1nbQAILhaQ?format=jpg&name=small',
+                eventName: 'MUSIKAL DANGDUT: Kukejar Kau Sayang',
+                artist: 'AULION dan Original Cast Musikal Dangdut',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket PRESALE - PANTURA - SABTU 30 NOV 19:30',
+                quantity: 1
+            },
+            {
+                id: 57,
+                image: 'https://pbs.twimg.com/media/GYeSxTnaQAAGd0v?format=jpg&name=small',
+                eventName: 'Stray Kids Concert World Tour <dominATE> in Jakarta 2024',
+                artist: 'Stray Kids',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket VIP A',
+                quantity: 1
+            },
+            {
+                id: 58,
+                image: 'https://pbs.twimg.com/media/GW2gT3dWEAAvfqV?format=jpg&name=small',
+                eventName: 'Joong Your Smile Solo Fan Meeting In Jakarta',
+                artist: 'JOONG',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'KiosTIX',
+                year: 2024,
+                notes: 'Secured 1 Tiket PLATINUM',
+                quantity: 1
+            },
+            {
+                id: 59,
+                image: 'https://pbs.twimg.com/media/GWo_F0XbIAAWa_7?format=jpg&name=small',
+                eventName: '2024 Treasure Relay Tour [Reboot] in Jakarta - Day 2',
+                artist: 'TREASURE',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket YELLOW',
+                quantity: 1
+            },
+            {
+                id: 60,
+                image: 'https://pbs.twimg.com/media/GWo_FOxW8AAIl1_?format=jpg&name=small',
+                eventName: 'SEVENTEEN TOUR "FOLLOW" AGAIN TO SEOUL 2024',
+                artist: 'SEVENTEEN',
+                country: 'Korea',
+                city: 'Seoul',
+                purchaseWebsite: 'Interpark Global',
+                year: 2024,
+                notes: 'Secured 1 Tiket S Seats',
+                quantity: 1
+            },
+            {
+                id: 61,
+                image: 'https://pbs.twimg.com/media/GWo_EmKW8AAkPRy?format=jpg&name=small',
+                eventName: 'Sheila On 7 "Tunggu Aku Di" Medan',
+                artist: 'SHEILA ON 7',
+                country: 'Indonesia',
+                city: 'Medan',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket FESTIVAL B',
+                quantity: 2
+            },
+            {
+                id: 62,
+                image: 'https://pbs.twimg.com/media/GWo_D7ibwAAtJz9?format=jpg&name=small',
+                eventName: 'Sheila On 7 "Tunggu Aku Di" Bandung',
+                artist: 'SHEILA ON 7',
+                country: 'Indonesia',
+                city: 'Bandung',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 3 Tiket CAT 3B',
+                quantity: 3
+            },
+            {
+                id: 63,
+                image: 'https://pbs.twimg.com/media/GWo_DT8awAAjJ1_?format=jpg&name=small',
+                eventName: 'Sheila On 7 "Tunggu Aku Di" Medan',
+                artist: 'SHEILA ON 7',
+                country: 'Indonesia',
+                city: 'Medan',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket FESTIVAL A1',
+                quantity: 1
+            },
+            {
+                id: 64,
+                image: 'https://pbs.twimg.com/media/GWo_Cv3bUAArrh-?format=jpg&name=small',
+                eventName: 'Sheila On 7 "Tunggu Aku Di" Bandung',
+                artist: 'SHEILA ON 7',
+                country: 'Indonesia',
+                city: 'Bandung',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 4 Tiket FESTIVAL',
+                quantity: 4
+            },
+            {
+                id: 65,
+                image: 'https://pbs.twimg.com/media/GWo_CMNaIAAV2ox?format=jpg&name=small',
+                eventName: '2024 RIIZE FAN-CON "RIIZING DAY" in JAKARTA',
+                artist: 'RIIZE',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket CAT 1A SOUNDCHECK',
+                quantity: 1
+            },
+            {
+                id: 66,
+                image: 'https://pbs.twimg.com/media/GWo_BuwbsAAO0t1?format=jpg&name=small',
+                eventName: 'Olivia Rodrigo GUTS World Tour in Bangkok',
+                artist: 'Olivia Rodrigo',
+                country: 'Thailand',
+                city: 'Bangkok',
+                purchaseWebsite: 'Thaiticketmajor',
+                year: 2024,
+                notes: 'Secured 1 Tiket SD',
+                quantity: 1
+            },
+            {
+                id: 67,
+                image: 'https://pbs.twimg.com/media/GWo_BGtacAA4Yn7?format=jpg&name=small',
+                eventName: '“AUTHENTIC MILE” (มายของแทร่) FIRST SOLO CONCERT',
+                artist: 'Mile Phakphum',
+                country: 'Thailand',
+                city: 'Bangkok',
+                purchaseWebsite: 'Thaiticketmajor',
+                year: 2024,
+                notes: 'Secured 1 Tiket MP1',
+                quantity: 1
+            },
+            {
+                id: 68,
+                image: 'https://pbs.twimg.com/media/GWo_AiSa8AAO-qL?format=jpg&name=small',
+                eventName: 'eaJ "When The Rain Stopped Following Me" in Jakarta',
+                artist: 'eaJ',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'TIX ID',
+                year: 2024,
+                notes: 'Secured 1 Tiket',
+                quantity: 1
+            },
+            {
+                id: 69,
+                image: 'https://pbs.twimg.com/media/GWo-_7-bMAAa_uH?format=jpg&name=small',
+                eventName: '2024 DOH KYUNG SOO ASIA FAN CONCERT <BLOOM> in JAKARTA',
+                artist: 'DOH KYUNG SOO',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 2 Tiket GREEN',
+                quantity: 2
+            },
+            {
+                id: 70,
+                image: 'https://pbs.twimg.com/media/GWo-_XMb0AAL44D?format=jpg&name=small',
+                eventName: 'DAY6 3RD WORLD TOUR <FOREVER YOUNG> in JAKARTA - Day 1',
+                artist: 'DAY6',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket BLUE A',
+                quantity: 1
+            },
+            {
+                id: 71,
+                image: 'https://pbs.twimg.com/media/GWo-_XMb0AAL44D?format=jpg&name=small',
+                eventName: 'DAY6 3RD WORLD TOUR <FOREVER YOUNG> in JAKARTA - Day 2',
+                artist: 'DAY6',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'tiket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket YELLOW',
+                quantity: 1
+            },
+            {
+                id: 72,
+                image: 'https://pbs.twimg.com/media/GWo--q1XwAAcs0R?format=jpg&name=small',
+                eventName: 'City Camp 2024',
+                artist: 'ATEEZ, BTOB, Boy Story, Colde, dan Lee Hi',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Traveloka',
+                year: 2024,
+                notes: 'Secured 1 Tiket DIAMOND',
+                quantity: 1
+            },
+            {
+                id: 73,
+                image: 'https://pbs.twimg.com/media/GWo--AWbgAAC9y3?format=jpg&name=small',
+                eventName: ' B.I 2024 TOUR [HYPE UP] IN JAKARTA',
+                artist: 'B.I',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 1 Tiket HYPE',
+                quantity: 1
+            },
+            {
+                id: 74,
+                image: 'https://pbs.twimg.com/media/GWo-9XsbcAEhFvM?format=jpg&name=small',
+                eventName: 'PEGADAIAN BADMINTON CLASH 2024',
+                artist: 'Sean Gelael, Hana Malasan, El Rumi, Angie Marcheria, Aaliyah Massaid, Tariq Halilintar, Fuji An, Fadly Faisal, Sintya Marisca, Onadio Leonardo, Praz Teguh, Kenzy Taulany',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'Loket.com',
+                year: 2024,
+                notes: 'Secured 3 Tiket TRIBUNE',
+                quantity: 3
+            },
+            {
+                id: 75,
+                image: 'https://pbs.twimg.com/media/GWo-8odW8AASXy2?format=jpg&name=small',
+                eventName: '2024 BAEKHYUN ASIA TOUR [Lonsdaleite] IN JAKARTA - Day 1',
+                artist: 'BAEKHYUN',
+                country: 'Indonesia',
+                city: 'Jakarta',
+                purchaseWebsite: 'APPLEWOOD',
+                year: 2024,
+                notes: 'Secured 1 Tiket C Seating',
+                quantity: 1
+            },
+            // Tambahkan data tiket lainnya di sini
+        ];
+
+        const ticketGallery = document.getElementById('ticket-gallery');
+        const securedTicketCountSpan = document.getElementById('secured-ticket-count');
+        const noResultsMessage = document.getElementById('no-results-message');
+
+        const filterCountry = document.getElementById('filter-country');
+        const filterWebsite = document.getElementById('filter-website');
+        const filterEvent = document.getElementById('filter-event');
+        const filterYear = document.getElementById('filter-year');
+        const filterArtist = document.getElementById('filter-artist');
+
+        // Fungsi untuk mengisi opsi filter
+        function populateFilters() {
+            const countries = [...new Set(allTickets.map(ticket => ticket.country))].sort();
+            const websites = [...new Set(allTickets.map(ticket => ticket.purchaseWebsite))].sort();
+            const years = [...new Set(allTickets.map(ticket => ticket.year))].sort((a, b) => b - a); // Urutkan dari terbaru
+
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                filterCountry.appendChild(option);
+            });
+
+            websites.forEach(website => {
+                const option = document.createElement('option');
+                option.value = website;
+                option.textContent = website;
+                filterWebsite.appendChild(option);
+            });
+
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                filterYear.appendChild(option);
+            });
+        }
+
+        // Fungsi untuk menampilkan tiket
+        function displayTickets(ticketsToShow) {
+            ticketGallery.innerHTML = ''; // Kosongkan galeri sebelum menampilkan yang baru
+            let totalSecuredCount = 0; // Inisialisasi total tiket
+
+            if (ticketsToShow.length === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+                ticketsToShow.forEach(ticket => {
+                    const ticketItem = document.createElement('div');
+                    ticketItem.classList.add('ticket-item');
+
+                    // Ambil kuantitas, default ke 1 jika tidak ada
+                    // Gunakan "quantity" jika ada, jika tidak, asumsi 1 untuk perhitungan
+                    const displayQuantity = (ticket.quantity && ticket.quantity > 1) ? `${ticket.quantity} Tiket` : '1 Tiket';
+
+
+                    totalSecuredCount += (ticket.quantity || 1); // Tambahkan ke total
+
+                    ticketItem.innerHTML = `
+                        <img src="${ticket.image}" alt="Tiket ${ticket.eventName}">
+                        <div class="ticket-info">
+                            <h3>${ticket.eventName}</h3>
+                            <p><strong>Artist:</strong> ${ticket.artist}</p>
+                            <p><strong>Lokasi:</strong> ${ticket.city}, ${ticket.country}</p>
+                            <p><strong>Dibeli dari:</strong> ${ticket.purchaseWebsite}</p>
+                            <p><strong>Tahun:</strong> ${ticket.year}</p>
+                            <p><strong>Jumlah:</strong> ${displayQuantity}</p>
+                            ${ticket.notes ? `<p><em>"${ticket.notes}"</em></p>` : ''}
+                        </div>
+                    `;
+                    ticketGallery.appendChild(ticketItem);
+                });
+            }
+            // Perbarui total tiket yang diamankan
+            securedTicketCountSpan.textContent = totalSecuredCount;
+        }
+
+        // Fungsi untuk menerapkan filter
+        function applyFilters() {
+            const selectedCountry = filterCountry.value.toLowerCase();
+            const selectedWebsite = filterWebsite.value.toLowerCase();
+            const selectedEvent = filterEvent.value.toLowerCase();
+            const selectedYear = filterYear.value;
+            const selectedArtist = filterArtist.value.toLowerCase();
+
+            const filteredTickets = allTickets.filter(ticket => {
+                const matchesCountry = selectedCountry === '' || ticket.country.toLowerCase().includes(selectedCountry);
+                const matchesWebsite = selectedWebsite === '' || ticket.purchaseWebsite.toLowerCase().includes(selectedWebsite);
+                const matchesEvent = selectedEvent === '' || ticket.eventName.toLowerCase().includes(selectedEvent);
+                const matchesYear = selectedYear === '' || ticket.year == selectedYear; // == untuk membandingkan string dan number
+                const matchesArtist = selectedArtist === '' || ticket.artist.toLowerCase().includes(selectedArtist);
+
+                return matchesCountry && matchesWebsite && matchesEvent && matchesYear && matchesArtist;
+            });
+            displayTickets(filteredTickets);
+        }
+
+        // Fungsi untuk mereset filter
+        function resetFilters() {
+            filterCountry.value = '';
+            filterWebsite.value = '';
+            filterEvent.value = '';
+            filterYear.value = '';
+            filterArtist.value = '';
+            applyFilters(); // Tampilkan semua tiket setelah reset
+        }
+
+        // Jalankan saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilters(); // Isi opsi filter
+            displayTickets(allTickets); // Tampilkan semua tiket secara default
+        });
+    </script>
+</body>
+</html>

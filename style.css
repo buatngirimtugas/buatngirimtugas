@@ -51,8 +51,8 @@ header {
 /* HP kecil */
 @media (max-width: 520px) {
   header {
-    min-height: 140px;
-    background-size: 650px auto;
+    min-height: 110px;
+    background-size: center top;
   }
 }
 
@@ -355,6 +355,7 @@ footer a:hover {
 .linktree-link:hover {
   background: #564036;
 }
+
 
 
 

@@ -31,7 +31,7 @@ header {
   background-repeat: no-repeat;
   background-position: center;
 
-  min-height: 260px;
+  min-height: clamp(160px, 18vw, 260px);
 
   display: flex;
   align-items: center;
@@ -319,5 +319,6 @@ footer a:hover {
     font-size: 1.7rem;
   }
 }
+
 
 
